@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Worship Control is a new desktop control solution designed to help worship leaders, pastors, and media teams control ProPresenter across their local network." />
-  <meta name="theme-color" content="#08111f" />
+  <meta name="description" content="Worship Control is a new desktop control experience for ProPresenter, built for worship leaders, pastors, and media teams." />
+  <meta name="theme-color" content="#050816" />
 
   <meta property="og:title" content="Worship Control — Coming Soon" />
-  <meta property="og:description" content="Connect. Control. Lead. A new way to control ProPresenter from across your local network." />
+  <meta property="og:description" content="Control ProPresenter from anywhere on your local network. Connect. Control. Lead." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wrshipcontrol.com/" />
 
@@ -15,19 +15,19 @@
 
   <style>
     :root {
-      --bg: #07101d;
-      --bg-soft: #0c1728;
-      --panel: rgba(16, 31, 52, 0.72);
-      --panel-strong: #12233a;
-      --text: #f5f8fc;
-      --muted: #aebcd0;
-      --accent: #62c6ff;
-      --accent-2: #8b7cff;
-      --success: #5ce1a4;
-      --border: rgba(255, 255, 255, 0.10);
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-      --radius: 24px;
-      --max-width: 1180px;
+      --bg: #050816;
+      --bg-2: #08111f;
+      --panel: rgba(14, 23, 40, 0.72);
+      --panel-strong: rgba(17, 29, 49, 0.92);
+      --text: #f5f7fb;
+      --muted: #a8b3c7;
+      --line: rgba(255,255,255,0.10);
+      --blue: #5ec8ff;
+      --violet: #8e7cff;
+      --green: #5ee0a3;
+      --shadow: 0 30px 100px rgba(0,0,0,0.45);
+      --radius: 28px;
+      --max: 1180px;
     }
 
     * {
@@ -45,21 +45,22 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 15%, rgba(98, 198, 255, 0.16), transparent 30%),
-        radial-gradient(circle at 90% 15%, rgba(139, 124, 255, 0.18), transparent 28%),
-        linear-gradient(145deg, #050a12 0%, var(--bg) 50%, #09162a 100%);
+        radial-gradient(circle at 15% 15%, rgba(94, 200, 255, 0.15), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(142, 124, 255, 0.18), transparent 28%),
+        linear-gradient(160deg, #04070d 0%, #050816 40%, #091426 100%);
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
+      z-index: -1;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      background:
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
     }
 
     a {
@@ -67,18 +68,27 @@
       text-decoration: none;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
     .container {
-      width: min(calc(100% - 40px), var(--max-width));
-      margin-inline: auto;
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
     }
 
     .site-header {
-      position: relative;
-      z-index: 10;
-      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 8, 22, 0.68);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     .nav {
+      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -89,19 +99,18 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      font-weight: 800;
+      font-weight: 850;
       letter-spacing: -0.03em;
-      font-size: 1.08rem;
     }
 
     .brand-mark {
-      display: grid;
-      place-items: center;
       width: 42px;
       height: 42px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 35px rgba(98, 198, 255, 0.24);
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      box-shadow: 0 10px 35px rgba(94, 200, 255, 0.22);
     }
 
     .brand-mark svg {
@@ -109,104 +118,123 @@
       height: 24px;
     }
 
-    .nav-link {
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
       color: var(--muted);
       font-size: 0.94rem;
       font-weight: 700;
-      transition: color 0.2s ease;
+      transition: color .2s ease;
     }
 
-    .nav-link:hover {
+    .nav-links a:hover {
       color: var(--text);
+    }
+
+    .nav-cta {
+      padding: 11px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
     }
 
     .hero {
       position: relative;
-      padding: 88px 0 70px;
+      padding: 110px 0 70px;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      align-items: center;
-      gap: 72px;
+    .hero-copy-wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: center;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      margin-bottom: 22px;
-      padding: 9px 13px;
-      border: 1px solid rgba(98, 198, 255, 0.22);
+      margin-bottom: 26px;
+      padding: 10px 14px;
+      border: 1px solid rgba(94,200,255,0.18);
       border-radius: 999px;
-      color: #d8f3ff;
-      background: rgba(98, 198, 255, 0.08);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
+      background: rgba(94,200,255,0.07);
+      color: #d8f4ff;
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
-    .eyebrow-dot {
+    .live-dot {
       width: 8px;
       height: 8px;
-      border-radius: 999px;
-      background: var(--success);
-      box-shadow: 0 0 0 6px rgba(92, 225, 164, 0.10);
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(94,224,163,0.09);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(.78); opacity: .62; }
     }
 
     h1 {
       margin: 0;
-      max-width: 780px;
-      font-size: clamp(3.2rem, 7vw, 6.8rem);
-      line-height: 0.95;
-      letter-spacing: -0.065em;
+      font-size: clamp(3.8rem, 8.8vw, 7.8rem);
+      line-height: .92;
+      letter-spacing: -.075em;
     }
 
-    .gradient-text {
+    .hero-gradient {
       display: block;
-      padding-bottom: 0.08em;
+      padding-bottom: .09em;
       color: transparent;
-      background: linear-gradient(110deg, #ffffff 5%, var(--accent) 52%, #b9aaff 100%);
+      background: linear-gradient(110deg, #fff 0%, var(--blue) 48%, #baadff 100%);
       -webkit-background-clip: text;
       background-clip: text;
     }
 
     .hero-copy {
-      max-width: 690px;
-      margin: 28px 0 0;
+      max-width: 780px;
+      margin: 30px auto 0;
       color: var(--muted);
       font-size: clamp(1.05rem, 1.8vw, 1.28rem);
       line-height: 1.75;
     }
 
     .tagline {
-      margin-top: 24px;
-      color: #e6eef8;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      margin-top: 22px;
+      font-size: .9rem;
+      font-weight: 850;
+      letter-spacing: .18em;
       text-transform: uppercase;
+      color: #e9eef7;
     }
 
     .hero-actions {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 14px;
       margin-top: 34px;
     }
 
     .button {
+      min-height: 54px;
       display: inline-flex;
-      min-height: 52px;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 0 21px;
-      border: 1px solid transparent;
+      padding: 0 22px;
       border-radius: 14px;
-      font-weight: 800;
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      border: 1px solid transparent;
+      font-weight: 850;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
 
     .button:hover {
@@ -215,240 +243,324 @@
 
     .button-primary {
       color: #06111e;
-      background: linear-gradient(135deg, var(--accent), #8bd6ff);
-      box-shadow: 0 14px 36px rgba(98, 198, 255, 0.22);
+      background: linear-gradient(135deg, var(--blue), #9cdfff);
+      box-shadow: 0 18px 42px rgba(94,200,255,.23);
     }
 
     .button-secondary {
-      border-color: var(--border);
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255,255,255,.045);
+      border-color: var(--line);
     }
 
     .microcopy {
       margin-top: 14px;
-      color: #8494aa;
-      font-size: 0.86rem;
+      color: #7f8ca1;
+      font-size: .88rem;
     }
 
-    .app-preview {
+    .hero-visual {
       position: relative;
+      margin-top: 72px;
     }
 
-    .glow {
+    .orb {
       position: absolute;
-      width: 78%;
-      aspect-ratio: 1;
       inset: 50% auto auto 50%;
+      width: 65%;
+      aspect-ratio: 1;
       transform: translate(-50%, -50%);
-      border-radius: 999px;
-      background: rgba(98, 198, 255, 0.18);
-      filter: blur(70px);
+      border-radius: 50%;
+      background: rgba(94,200,255,.16);
+      filter: blur(90px);
+      pointer-events: none;
     }
 
-    .window {
+    .device-shell {
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 25px;
-      background: linear-gradient(180deg, rgba(19, 37, 61, 0.96), rgba(8, 17, 30, 0.98));
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(180deg, rgba(18,31,52,.97), rgba(7,13,24,.99));
       box-shadow: var(--shadow);
-      transform: perspective(1200px) rotateY(-7deg) rotateX(3deg);
+      transform: perspective(1600px) rotateX(3deg);
     }
 
-    .window-bar {
+    .device-bar {
+      height: 46px;
       display: flex;
       align-items: center;
       gap: 7px;
-      height: 46px;
       padding: 0 17px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.025);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
     }
 
-    .window-dot {
+    .device-dot {
       width: 10px;
       height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.20);
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
     }
 
-    .app-layout {
+    .app {
       display: grid;
-      grid-template-columns: 118px 1fr;
-      min-height: 390px;
+      grid-template-columns: 180px 1fr;
+      min-height: 560px;
     }
 
     .sidebar {
-      padding: 18px 12px;
-      border-right: 1px solid var(--border);
-      background: rgba(4, 10, 19, 0.48);
+      padding: 22px 16px;
+      border-right: 1px solid var(--line);
+      background: rgba(3,8,16,.42);
     }
 
     .sidebar-logo {
-      height: 12px;
-      width: 68px;
-      margin: 4px 0 24px 5px;
+      width: 92px;
+      height: 14px;
+      margin: 5px 0 28px 6px;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: linear-gradient(90deg,var(--blue),var(--violet));
     }
 
-    .side-item {
-      height: 34px;
-      margin-bottom: 8px;
-      border-radius: 9px;
-      background: rgba(255,255,255,0.045);
+    .menu-item {
+      height: 42px;
+      margin-bottom: 9px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.04);
     }
 
-    .side-item.active {
-      background: rgba(98, 198, 255, 0.16);
-      border: 1px solid rgba(98, 198, 255, 0.18);
+    .menu-item.active {
+      border: 1px solid rgba(94,200,255,.18);
+      background: rgba(94,200,255,.14);
     }
 
     .workspace {
-      padding: 22px;
+      padding: 26px;
     }
 
-    .status-row {
+    .workspace-top {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      gap: 20px;
       margin-bottom: 20px;
     }
 
-    .status-title {
-      width: 130px;
-      height: 15px;
+    .title-line {
+      width: 180px;
+      height: 16px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,.8);
     }
 
-    .online {
-      display: flex;
+    .status {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #bdeed7;
-      font-size: 0.68rem;
-      font-weight: 800;
+      color: #baf2d5;
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .06em;
     }
 
-    .online span {
+    .status span {
       width: 8px;
       height: 8px;
-      border-radius: 999px;
-      background: var(--success);
+      border-radius: 50%;
+      background: var(--green);
     }
 
-    .preview-screen {
+    .preview {
+      min-height: 290px;
       display: grid;
       place-items: center;
-      min-height: 165px;
-      margin-bottom: 16px;
-      padding: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      background:
-        linear-gradient(135deg, rgba(139,124,255,0.19), rgba(98,198,255,0.07)),
-        #080f1a;
+      padding: 26px;
       text-align: center;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.09);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(94,200,255,.14), transparent 30%),
+        linear-gradient(145deg, #101e34, #09111e);
     }
 
-    .preview-screen strong {
-      font-size: 1.2rem;
-      letter-spacing: -0.03em;
+    .preview h3 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.4rem);
+      letter-spacing: -.045em;
     }
 
-    .preview-screen small {
-      display: block;
-      margin-top: 8px;
+    .preview p {
+      margin: 12px 0 0;
       color: var(--muted);
     }
 
-    .slides {
+    .slide-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
     }
 
     .slide {
-      aspect-ratio: 16 / 9;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      background: linear-gradient(145deg, #142640, #0a1424);
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(145deg,#172842,#0a1423);
     }
 
     .slide.active {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(98,198,255,0.13);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(94,200,255,.12);
+    }
+
+    .platform-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .platform-chip {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #c7d1df;
+      background: rgba(255,255,255,.035);
+      font-size: .86rem;
+      font-weight: 750;
+    }
+
+    section {
+      scroll-margin-top: 90px;
     }
 
     .section {
-      padding: 72px 0;
+      padding: 86px 0;
     }
 
     .section-heading {
-      max-width: 720px;
-      margin-bottom: 34px;
+      max-width: 760px;
+      margin-bottom: 36px;
     }
 
     .section-kicker {
       margin: 0 0 12px;
-      color: var(--accent);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
+      color: var(--blue);
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
     h2 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.45rem);
-      line-height: 1.05;
-      letter-spacing: -0.045em;
+      font-size: clamp(2.2rem,4vw,3.7rem);
+      line-height: 1.04;
+      letter-spacing: -.05em;
     }
 
     .section-copy {
       margin: 18px 0 0;
       color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
+      font-size: 1.06rem;
+      line-height: 1.72;
     }
 
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3,1fr);
       gap: 18px;
     }
 
     .feature-card {
-      min-height: 220px;
-      padding: 25px;
-      border: 1px solid var(--border);
+      min-height: 250px;
+      padding: 26px;
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(18, 35, 58, 0.74), rgba(10, 21, 36, 0.72));
-      box-shadow: 0 15px 50px rgba(0,0,0,0.14);
+      background: linear-gradient(180deg,rgba(17,29,49,.76),rgba(9,18,31,.72));
+      box-shadow: 0 20px 60px rgba(0,0,0,.16);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(94,200,255,.24);
     }
 
     .feature-icon {
+      width: 46px;
+      height: 46px;
       display: grid;
       place-items: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 21px;
-      border-radius: 13px;
+      margin-bottom: 22px;
+      border-radius: 14px;
       color: #06111e;
-      background: linear-gradient(135deg, var(--accent), #c0eaff);
+      background: linear-gradient(135deg,var(--blue),#c6eeff);
       font-weight: 900;
     }
 
     .feature-card h3 {
       margin: 0 0 10px;
-      font-size: 1.13rem;
+      font-size: 1.18rem;
     }
 
     .feature-card p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.68;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .info-card {
+      padding: 32px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,rgba(16,27,45,.78),rgba(8,15,27,.74));
+    }
+
+    .info-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .check-list {
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      color: #dbe4ef;
+    }
+
+    .check {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(94,224,163,.13);
+      color: var(--green);
+      font-size: .75rem;
+      font-weight: 900;
     }
 
     .notice {
@@ -456,125 +568,143 @@
       grid-template-columns: auto 1fr;
       gap: 18px;
       align-items: start;
-      margin-top: 26px;
+      margin-top: 22px;
       padding: 22px;
-      border: 1px solid rgba(98, 198, 255, 0.20);
       border-radius: 18px;
-      background: rgba(98, 198, 255, 0.06);
+      border: 1px solid rgba(94,200,255,.18);
+      background: rgba(94,200,255,.055);
     }
 
-    .notice-icon {
+    .notice-badge {
+      width: 38px;
+      height: 38px;
       display: grid;
       place-items: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 11px;
-      background: rgba(98, 198, 255, 0.15);
-      color: var(--accent);
+      border-radius: 12px;
+      background: rgba(94,200,255,.14);
+      color: var(--blue);
       font-weight: 900;
     }
 
     .notice strong {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .notice p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .launch-panel {
       position: relative;
       overflow: hidden;
-      padding: clamp(34px, 6vw, 64px);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 30px;
+      padding: clamp(38px,6vw,70px);
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,.12);
       background:
-        radial-gradient(circle at 80% 20%, rgba(139, 124, 255, 0.25), transparent 32%),
-        radial-gradient(circle at 15% 85%, rgba(98, 198, 255, 0.18), transparent 35%),
-        linear-gradient(145deg, #12233a, #0b1728);
+        radial-gradient(circle at 85% 15%, rgba(142,124,255,.26), transparent 30%),
+        radial-gradient(circle at 12% 88%, rgba(94,200,255,.2), transparent 34%),
+        linear-gradient(145deg,#13243c,#0a1627);
       box-shadow: var(--shadow);
       text-align: center;
     }
 
     .launch-panel p {
-      max-width: 690px;
+      max-width: 700px;
       margin: 18px auto 0;
       color: var(--muted);
+      line-height: 1.72;
       font-size: 1.06rem;
-      line-height: 1.7;
     }
 
-    .launch-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 28px;
+    .signup-form {
+      max-width: 620px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin: 30px auto 0;
+    }
+
+    .signup-form input {
+      min-height: 54px;
+      width: 100%;
+      padding: 0 16px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      outline: none;
+      background: rgba(255,255,255,.055);
+    }
+
+    .signup-form input:focus {
+      border-color: rgba(94,200,255,.45);
+      box-shadow: 0 0 0 3px rgba(94,200,255,.09);
+    }
+
+    .signup-note {
+      margin-top: 14px;
+      color: #7f8ca1;
+      font-size: .86rem;
     }
 
     .footer {
-      padding: 42px 0;
-      color: #7f8ea2;
-      font-size: 0.88rem;
+      padding: 44px 0;
+      color: #7f8ca1;
+      font-size: .88rem;
     }
 
     .footer-row {
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      padding-top: 26px;
-      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
     }
 
     .footer strong {
-      color: #bec9d8;
+      color: #c1ccda;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     @media (max-width: 900px) {
-      .hero {
-        padding-top: 58px;
+      .nav-links a:not(.nav-cta) {
+        display: none;
       }
 
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 54px;
+      .app {
+        grid-template-columns: 130px 1fr;
+        min-height: 470px;
       }
 
-      .app-preview {
-        max-width: 620px;
-      }
-
-      .window {
-        transform: none;
-      }
-
-      .feature-grid {
+      .feature-grid,
+      .split {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 620px) {
+    @media (max-width: 640px) {
       .container {
-        width: min(calc(100% - 28px), var(--max-width));
-      }
-
-      .site-header {
-        padding: 17px 0;
-      }
-
-      .nav-link {
-        display: none;
+        width: min(calc(100% - 28px), var(--max));
       }
 
       .hero {
-        padding: 48px 0 42px;
+        padding: 78px 0 52px;
       }
 
       h1 {
-        font-size: clamp(3rem, 16vw, 4.5rem);
+        font-size: clamp(3.15rem,16vw,4.7rem);
       }
 
       .hero-copy {
@@ -585,33 +715,62 @@
         width: 100%;
       }
 
-      .app-layout {
-        grid-template-columns: 84px 1fr;
-        min-height: 310px;
+      .hero-visual {
+        margin-top: 48px;
+      }
+
+      .device-shell {
+        border-radius: 20px;
+      }
+
+      .app {
+        grid-template-columns: 78px 1fr;
+        min-height: 345px;
       }
 
       .sidebar {
-        padding-inline: 8px;
+        padding: 14px 8px;
+      }
+
+      .sidebar-logo {
+        width: 52px;
+        margin-bottom: 18px;
+      }
+
+      .menu-item {
+        height: 32px;
       }
 
       .workspace {
-        padding: 14px;
+        padding: 13px;
       }
 
-      .preview-screen {
-        min-height: 135px;
+      .title-line {
+        width: 100px;
       }
 
-      .slides {
-        grid-template-columns: repeat(2, 1fr);
+      .preview {
+        min-height: 165px;
       }
 
-      .slide:last-child {
+      .slide-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .slide:nth-child(n+3) {
         display: none;
       }
 
       .section {
-        padding: 54px 0;
+        padding: 60px 0;
+      }
+
+      .signup-form {
+        grid-template-columns: 1fr;
+      }
+
+      .signup-form .button {
+        width: 100%;
       }
 
       .footer-row {
@@ -634,79 +793,93 @@
         <span>Worship Control</span>
       </a>
 
-      <a class="nav-link" href="#launch">Coming Soon</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#features">Features</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#launch">Launch</a>
+        <a class="nav-cta" href="#launch">Join the Beta</a>
+      </nav>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-grid">
-        <div>
+      <div class="container">
+        <div class="hero-copy-wrap fade-up">
           <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            In Development
+            <span class="live-dot"></span>
+            Currently in development
           </div>
 
           <h1>
-            Control the moment.
-            <span class="gradient-text">Lead without limits.</span>
+            Control ProPresenter
+            <span class="hero-gradient">from anywhere.</span>
           </h1>
 
           <p class="hero-copy">
-            Worship Control is a new desktop control experience designed for worship leaders,
-            pastors, and media teams who need simple, reliable access to ProPresenter from
-            another Mac or PC on their local network.
+            Worship Control is a new desktop control experience built for worship leaders,
+            pastors, and media teams who need fast, reliable access to ProPresenter from
+            another Mac or PC on the same local network.
           </p>
 
           <div class="tagline">Connect. Control. Lead.</div>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="#launch">Get Launch Updates</a>
-            <a class="button button-secondary" href="#features">Explore the Vision</a>
+            <a class="button button-primary" href="#launch">Join the Beta</a>
+            <a class="button button-secondary" href="#features">Explore Worship Control</a>
           </div>
 
           <div class="microcopy">Built for churches. Designed for the people leading worship.</div>
         </div>
 
-        <div class="app-preview" aria-label="Worship Control application preview">
-          <div class="glow"></div>
+        <div class="hero-visual fade-up">
+          <div class="orb"></div>
 
-          <div class="window">
-            <div class="window-bar">
-              <span class="window-dot"></span>
-              <span class="window-dot"></span>
-              <span class="window-dot"></span>
+          <div class="device-shell">
+            <div class="device-bar">
+              <span class="device-dot"></span>
+              <span class="device-dot"></span>
+              <span class="device-dot"></span>
             </div>
 
-            <div class="app-layout">
+            <div class="app">
               <aside class="sidebar">
                 <div class="sidebar-logo"></div>
-                <div class="side-item active"></div>
-                <div class="side-item"></div>
-                <div class="side-item"></div>
-                <div class="side-item"></div>
+                <div class="menu-item active"></div>
+                <div class="menu-item"></div>
+                <div class="menu-item"></div>
+                <div class="menu-item"></div>
+                <div class="menu-item"></div>
               </aside>
 
               <div class="workspace">
-                <div class="status-row">
-                  <div class="status-title"></div>
-                  <div class="online"><span></span> CONNECTED</div>
+                <div class="workspace-top">
+                  <div class="title-line"></div>
+                  <div class="status"><span></span> CONNECTED</div>
                 </div>
 
-                <div class="preview-screen">
+                <div class="preview">
                   <div>
-                    <strong>Take control from anywhere in the room.</strong>
-                    <small>Fast access. Clear navigation. Confident leadership.</small>
+                    <h3>Take control without leaving the platform.</h3>
+                    <p>Navigate presentations. Advance slides. Lead with confidence.</p>
                   </div>
                 </div>
 
-                <div class="slides">
+                <div class="slide-grid">
                   <div class="slide active"></div>
+                  <div class="slide"></div>
                   <div class="slide"></div>
                   <div class="slide"></div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="platform-strip">
+            <span class="platform-chip">Mac</span>
+            <span class="platform-chip">Windows</span>
+            <span class="platform-chip">Local Network Control</span>
+            <span class="platform-chip">Built for ProPresenter</span>
           </div>
         </div>
       </div>
@@ -714,53 +887,83 @@
 
     <section class="section" id="features">
       <div class="container">
-        <div class="section-heading">
-          <p class="section-kicker">A Better Worship Workflow</p>
-          <h2>Designed around the way ministry actually happens.</h2>
+        <div class="section-heading fade-up">
+          <p class="section-kicker">Built for Worship Teams</p>
+          <h2>A simpler way to stay connected to the presentation.</h2>
           <p class="section-copy">
-            Worship Control is being created to make presentation control more accessible
-            without forcing worship leaders to stay behind the media computer.
+            Worship Control is being designed around real ministry workflows—where worship leaders,
+            pastors, and volunteers need clear controls without unnecessary complexity.
           </p>
         </div>
 
         <div class="feature-grid">
-          <article class="feature-card">
+          <article class="feature-card fade-up">
             <div class="feature-icon">01</div>
             <h3>Remote Presentation Control</h3>
             <p>
-              Navigate presentations and control slides from another computer connected to
-              your church's local network.
+              Navigate presentations and control slides from another computer connected to your
+              church's local network.
             </p>
           </article>
 
-          <article class="feature-card">
+          <article class="feature-card fade-up">
             <div class="feature-icon">02</div>
-            <h3>Built for Mac and Windows</h3>
+            <h3>Mac and Windows</h3>
             <p>
-              A cross-platform desktop application designed to give churches flexibility
-              across different ministry and production setups.
+              Built as a true cross-platform desktop application so churches can use the equipment
+              they already have.
             </p>
           </article>
 
-          <article class="feature-card">
+          <article class="feature-card fade-up">
             <div class="feature-icon">03</div>
             <h3>Simple by Design</h3>
             <p>
-              A focused interface created for pastors, worship leaders, and volunteers—not
-              only highly technical production teams.
+              A clean, focused interface made for pastors, worship leaders, and volunteers—not only
+              advanced production teams.
             </p>
           </article>
         </div>
+      </div>
+    </section>
 
-        <div class="notice">
-          <div class="notice-icon">i</div>
-          <div>
-            <strong>Current development focus</strong>
-            <p>
-              Early testing shows the strongest connection when the ProPresenter host computer
-              is connected by Ethernet and the Worship Control computer is connected to the same
-              network by Ethernet or Wi-Fi. Additional network configurations are still being tested.
-            </p>
+    <section class="section" id="platforms">
+      <div class="container split">
+        <div class="info-card fade-up">
+          <p class="section-kicker">Why Worship Control</p>
+          <h3>Lead from where ministry is happening.</h3>
+          <p>
+            Worship leaders should not have to remain tied to the media booth to stay connected
+            to the presentation. Worship Control is being built to provide flexible, reliable access
+            from across the room.
+          </p>
+
+          <ul class="check-list">
+            <li><span class="check">✓</span><span>Control from another Mac or Windows computer</span></li>
+            <li><span class="check">✓</span><span>Designed for use on the church's local network</span></li>
+            <li><span class="check">✓</span><span>Built around fast access and clear navigation</span></li>
+            <li><span class="check">✓</span><span>Created with worship leaders and volunteers in mind</span></li>
+          </ul>
+        </div>
+
+        <div class="info-card fade-up">
+          <p class="section-kicker">Current Testing</p>
+          <h3>Reliable connection is the priority.</h3>
+          <p>
+            Early testing has shown the strongest performance when the ProPresenter host computer
+            is connected by Ethernet. The Worship Control computer may connect through Ethernet or
+            Wi-Fi on the same local network.
+          </p>
+
+          <div class="notice">
+            <div class="notice-badge">i</div>
+            <div>
+              <strong>Network support is still being expanded.</strong>
+              <p>
+                Additional Wi-Fi-to-Wi-Fi configurations and network environments are still under
+                active development and testing.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -768,28 +971,29 @@
 
     <section class="section" id="launch">
       <div class="container">
-        <div class="launch-panel">
+        <div class="launch-panel fade-up">
           <p class="section-kicker">Launching Soon</p>
           <h2>Be among the first to experience Worship Control.</h2>
           <p>
-            Development is moving forward for both Mac and Windows. Join the early interest list
-            to receive launch news, testing updates, pricing information, and availability.
+            Join the early access list for beta opportunities, development updates, pricing information,
+            and launch availability for Mac and Windows.
           </p>
 
-          <div class="launch-actions">
-            <!-- Replace the email address below with your preferred Worship Control email address. -->
-            <a class="button button-primary"
-               href="mailto:hello@wrshipcontrol.com?subject=Worship%20Control%20Launch%20Updates&body=Please%20add%20me%20to%20the%20Worship%20Control%20launch%20update%20list.">
-              Join the Launch List
-            </a>
+          <form class="signup-form"
+                action="mailto:hello@wrshipcontrol.com"
+                method="post"
+                enctype="text/plain">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              aria-label="Email address"
+              required
+            />
+            <button class="button button-primary" type="submit">Join the Launch List</button>
+          </form>
 
-            <a class="button button-secondary"
-               href="mailto:hello@wrshipcontrol.com?subject=Worship%20Control%20Question">
-              Contact Worship Control
-            </a>
-          </div>
-
-          <div class="microcopy">
+          <div class="signup-note">
             No spam. Just meaningful updates as Worship Control approaches launch.
           </div>
         </div>
@@ -806,6 +1010,17 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
   </script>
 </body>
 </html>
