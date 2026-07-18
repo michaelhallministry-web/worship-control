@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Worship Control is a new desktop control solution designed to help worship leaders, pastors, and media teams control ProPresenter across their local network." />
+  <meta name="theme-color" content="#08111f" />
+
+  <meta property="og:title" content="Worship Control — Coming Soon" />
+  <meta property="og:description" content="Connect. Control. Lead. A new way to control ProPresenter from across your local network." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wrshipcontrol.com/" />
+
+  <title>Worship Control — Coming Soon</title>
+
+  <style>
+    :root {
+      --bg: #07101d;
+      --bg-soft: #0c1728;
+      --panel: rgba(16, 31, 52, 0.72);
+      --panel-strong: #12233a;
+      --text: #f5f8fc;
+      --muted: #aebcd0;
+      --accent: #62c6ff;
+      --accent-2: #8b7cff;
+      --success: #5ce1a4;
+      --border: rgba(255, 255, 255, 0.10);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 15%, rgba(98, 198, 255, 0.16), transparent 30%),
+        radial-gradient(circle at 90% 15%, rgba(139, 124, 255, 0.18), transparent 28%),
+        linear-gradient(145deg, #050a12 0%, var(--bg) 50%, #09162a 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 10;
+      padding: 24px 0;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.08rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 35px rgba(98, 198, 255, 0.24);
+    }
+
+    .brand-mark svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      position: relative;
+      padding: 88px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      align-items: center;
+      gap: 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      padding: 9px 13px;
+      border: 1px solid rgba(98, 198, 255, 0.22);
+      border-radius: 999px;
+      color: #d8f3ff;
+      background: rgba(98, 198, 255, 0.08);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(92, 225, 164, 0.10);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(3.2rem, 7vw, 6.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+    }
+
+    .gradient-text {
+      display: block;
+      padding-bottom: 0.08em;
+      color: transparent;
+      background: linear-gradient(110deg, #ffffff 5%, var(--accent) 52%, #b9aaff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 690px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+      line-height: 1.75;
+    }
+
+    .tagline {
+      margin-top: 24px;
+      color: #e6eef8;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 21px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-weight: 800;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #06111e;
+      background: linear-gradient(135deg, var(--accent), #8bd6ff);
+      box-shadow: 0 14px 36px rgba(98, 198, 255, 0.22);
+    }
+
+    .button-secondary {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .microcopy {
+      margin-top: 14px;
+      color: #8494aa;
+      font-size: 0.86rem;
+    }
+
+    .app-preview {
+      position: relative;
+    }
+
+    .glow {
+      position: absolute;
+      width: 78%;
+      aspect-ratio: 1;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background: rgba(98, 198, 255, 0.18);
+      filter: blur(70px);
+    }
+
+    .window {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 25px;
+      background: linear-gradient(180deg, rgba(19, 37, 61, 0.96), rgba(8, 17, 30, 0.98));
+      box-shadow: var(--shadow);
+      transform: perspective(1200px) rotateY(-7deg) rotateX(3deg);
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      height: 46px;
+      padding: 0 17px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .window-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.20);
+    }
+
+    .app-layout {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      min-height: 390px;
+    }
+
+    .sidebar {
+      padding: 18px 12px;
+      border-right: 1px solid var(--border);
+      background: rgba(4, 10, 19, 0.48);
+    }
+
+    .sidebar-logo {
+      height: 12px;
+      width: 68px;
+      margin: 4px 0 24px 5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .side-item {
+      height: 34px;
+      margin-bottom: 8px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.045);
+    }
+
+    .side-item.active {
+      background: rgba(98, 198, 255, 0.16);
+      border: 1px solid rgba(98, 198, 255, 0.18);
+    }
+
+    .workspace {
+      padding: 22px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .status-title {
+      width: 130px;
+      height: 15px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+    }
+
+    .online {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #bdeed7;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .online span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+    }
+
+    .preview-screen {
+      display: grid;
+      place-items: center;
+      min-height: 165px;
+      margin-bottom: 16px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(139,124,255,0.19), rgba(98,198,255,0.07)),
+        #080f1a;
+      text-align: center;
+    }
+
+    .preview-screen strong {
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .preview-screen small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .slides {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .slide {
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      background: linear-gradient(145deg, #142640, #0a1424);
+    }
+
+    .slide.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(98,198,255,0.13);
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .section-copy {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      min-height: 220px;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(18, 35, 58, 0.74), rgba(10, 21, 36, 0.72));
+      box-shadow: 0 15px 50px rgba(0,0,0,0.14);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 21px;
+      border-radius: 13px;
+      color: #06111e;
+      background: linear-gradient(135deg, var(--accent), #c0eaff);
+      font-weight: 900;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.13rem;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .notice {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 26px;
+      padding: 22px;
+      border: 1px solid rgba(98, 198, 255, 0.20);
+      border-radius: 18px;
+      background: rgba(98, 198, 255, 0.06);
+    }
+
+    .notice-icon {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: rgba(98, 198, 255, 0.15);
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .notice p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .launch-panel {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(34px, 6vw, 64px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(139, 124, 255, 0.25), transparent 32%),
+        radial-gradient(circle at 15% 85%, rgba(98, 198, 255, 0.18), transparent 35%),
+        linear-gradient(145deg, #12233a, #0b1728);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .launch-panel p {
+      max-width: 690px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+
+    .launch-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .footer {
+      padding: 42px 0;
+      color: #7f8ea2;
+      font-size: 0.88rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 26px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer strong {
+      color: #bec9d8;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding-top: 58px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 54px;
+      }
+
+      .app-preview {
+        max-width: 620px;
+      }
+
+      .window {
+        transform: none;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .site-header {
+        padding: 17px 0;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      .hero {
+        padding: 48px 0 42px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 4.5rem);
+      }
+
+      .hero-copy {
+        font-size: 1rem;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .app-layout {
+        grid-template-columns: 84px 1fr;
+        min-height: 310px;
+      }
+
+      .sidebar {
+        padding-inline: 8px;
+      }
+
+      .workspace {
+        padding: 14px;
+      }
+
+      .preview-screen {
+        min-height: 135px;
+      }
+
+      .slides {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .slide:last-child {
+        display: none;
+      }
+
+      .section {
+        padding: 54px 0;
+      }
+
+      .footer-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Worship Control home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 7.5h14M5 12h9M5 16.5h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M16 10l3 2-3 2v-4z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span>Worship Control</span>
+      </a>
+
+      <a class="nav-link" href="#launch">Coming Soon</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            In Development
+          </div>
+
+          <h1>
+            Control the moment.
+            <span class="gradient-text">Lead without limits.</span>
+          </h1>
+
+          <p class="hero-copy">
+            Worship Control is a new desktop control experience designed for worship leaders,
+            pastors, and media teams who need simple, reliable access to ProPresenter from
+            another Mac or PC on their local network.
+          </p>
+
+          <div class="tagline">Connect. Control. Lead.</div>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#launch">Get Launch Updates</a>
+            <a class="button button-secondary" href="#features">Explore the Vision</a>
+          </div>
+
+          <div class="microcopy">Built for churches. Designed for the people leading worship.</div>
+        </div>
+
+        <div class="app-preview" aria-label="Worship Control application preview">
+          <div class="glow"></div>
+
+          <div class="window">
+            <div class="window-bar">
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+            </div>
+
+            <div class="app-layout">
+              <aside class="sidebar">
+                <div class="sidebar-logo"></div>
+                <div class="side-item active"></div>
+                <div class="side-item"></div>
+                <div class="side-item"></div>
+                <div class="side-item"></div>
+              </aside>
+
+              <div class="workspace">
+                <div class="status-row">
+                  <div class="status-title"></div>
+                  <div class="online"><span></span> CONNECTED</div>
+                </div>
+
+                <div class="preview-screen">
+                  <div>
+                    <strong>Take control from anywhere in the room.</strong>
+                    <small>Fast access. Clear navigation. Confident leadership.</small>
+                  </div>
+                </div>
+
+                <div class="slides">
+                  <div class="slide active"></div>
+                  <div class="slide"></div>
+                  <div class="slide"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">A Better Worship Workflow</p>
+          <h2>Designed around the way ministry actually happens.</h2>
+          <p class="section-copy">
+            Worship Control is being created to make presentation control more accessible
+            without forcing worship leaders to stay behind the media computer.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">01</div>
+            <h3>Remote Presentation Control</h3>
+            <p>
+              Navigate presentations and control slides from another computer connected to
+              your church's local network.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">02</div>
+            <h3>Built for Mac and Windows</h3>
+            <p>
+              A cross-platform desktop application designed to give churches flexibility
+              across different ministry and production setups.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">03</div>
+            <h3>Simple by Design</h3>
+            <p>
+              A focused interface created for pastors, worship leaders, and volunteers—not
+              only highly technical production teams.
+            </p>
+          </article>
+        </div>
+
+        <div class="notice">
+          <div class="notice-icon">i</div>
+          <div>
+            <strong>Current development focus</strong>
+            <p>
+              Early testing shows the strongest connection when the ProPresenter host computer
+              is connected by Ethernet and the Worship Control computer is connected to the same
+              network by Ethernet or Wi-Fi. Additional network configurations are still being tested.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="launch">
+      <div class="container">
+        <div class="launch-panel">
+          <p class="section-kicker">Launching Soon</p>
+          <h2>Be among the first to experience Worship Control.</h2>
+          <p>
+            Development is moving forward for both Mac and Windows. Join the early interest list
+            to receive launch news, testing updates, pricing information, and availability.
+          </p>
+
+          <div class="launch-actions">
+            <!-- Replace the email address below with your preferred Worship Control email address. -->
+            <a class="button button-primary"
+               href="mailto:hello@wrshipcontrol.com?subject=Worship%20Control%20Launch%20Updates&body=Please%20add%20me%20to%20the%20Worship%20Control%20launch%20update%20list.">
+              Join the Launch List
+            </a>
+
+            <a class="button button-secondary"
+               href="mailto:hello@wrshipcontrol.com?subject=Worship%20Control%20Question">
+              Contact Worship Control
+            </a>
+          </div>
+
+          <div class="microcopy">
+            No spam. Just meaningful updates as Worship Control approaches launch.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div><strong>Worship Control</strong> — Connect. Control. Lead.</div>
+      <div>&copy; <span id="year"></span> Worship Control. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
